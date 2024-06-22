@@ -1,10 +1,10 @@
-#APLICACIÓN WEB PARA BUSCAR PELICULAS DE STAR WARS
+# APLICACIÓN WEB PARA BUSCAR PELICULAS DE STAR WARS
 
-##DESCRIPCIÓN:
+## DESCRIPCIÓN:
 Aplicación Web en React que muestra el listado completo de películas de star wars, y que es capaz de filtar por titulo y año sin necesidad de recargar la página.
 Esta aplicación consigue los datos a través de una API de nuestro servidor PHP, el cuál recoge los datos con una consulta en https://www.omdbapi.com y los almacena en una base de datos local.
 
-##INSTRUCCIONES PARA LA INSTALACIÓN
+## INSTRUCCIONES PARA LA INSTALACIÓN
 El proyecto consta de 2 carpetas backend_php y catalogo_peliculas, al tratarse de una prueba he usado herramientas que permiten simular la web en un entorno local.
 Pero se podría subir a un hoster cambiando las urls por el nuevo dominio en el código y creando el build de la app react (npm run build).
 A continuación voy a explicar los pasos que he seguido para probar el código de manera local:
@@ -28,7 +28,7 @@ A continuación voy a explicar los pasos que he seguido para probar el código d
 
 Con eso ya deberíamos poder ver una web con el listado completo de peliculas de star wars
 
-##PLANIFICACIÓN
+## PLANIFICACIÓN
 1. Estudio de requisitos
 2. Estudio de las consultas a la API https://www.omdbapi.com
 3. Dividir el proyecto en secciones: Carga de datos, Creación de BBDD, Backend PHP (Model), Web Services y Front-End (React)
@@ -41,7 +41,7 @@ Con eso ya deberíamos poder ver una web con el listado completo de peliculas de
 10. Estilado
 11. Documentación
 
-##CUESTIONARIO
+## CUESTIONARIO
 1. Si te asignan una tarea y ves que la funcionalidad no está definida al 100%, ¿qué haces?
    
    Intento recopilar más información, ya que si no está totalmente definida puede que la aplicación no alcance los estandares deseados y supongo una mayor perdida de tiempo.

@@ -39,40 +39,83 @@ class peliculasModule extends Model{
 		}
 	}
 
-	public function insertPeliculas(){
+	public function getPeliculas($title,$year){
 		try{
-			//Si no hacemos este array de episodios y solo ponemos Star Wars en el enlace solo devolverá el 4 episodio, no es eficiente porque hacemos 9 llamadas pero en la documentación de la api no aportan otra solución 
-			$episodios=["I","II","III","IV","V","VI","VII","VIII","IX"];
-			
-			//Conexion BBDD
 			$conn = DatabaseConn::getConn();
-			$conn->autocommit(false);
+			$peliculasList = array();
 			
-			foreach($episodios as $ep){
-			//Conexion API
-			$api="http://www.omdbapi.com/?apikey=731e41f&t=Star+Wars+".$ep;
-
-			$json_data = file_get_contents($api);
-			$film=json_decode($json_data,true);
-
-				$query = "INSERT INTO peliculas_star_wars (ID,Titulo,Fecha,Descripcion) VALUES ('".$film['imdbID']."','".$film['Title']."','".$film['Year']."','".$film['Plot']."')";
-				if ($res = $conn->query("$query")) {
-					// Confirma la transacción si la inserción es exitosa
-					$conn->commit();
-					return true;
-				}else{
-					// Si hay un error, revierte la transacción
-					$conn->rollback();
-					return false;
-				}
+			$query = "SELECT * FROM peliculas_star_wars";
+			if($title != "" && $year != ""){
+				$query .= " WHERE Titulo LIKE '%$title%' AND Fecha LIKE '%$year%'";
+			}elseif($title != ""){
+				$query .= " WHERE Titulo LIKE '%$title%'";
+			}elseif($year != ""){
+				$query .= " WHERE Fecha LIKE '%$year%'";
 			}
-		}catch(Exception $e){
-			// Si hay una excepción, revierte la transacción
-			$conn->rollback();
+
+			if ($res = $conn->query("$query")) {
+				while ($row = $res->fetch_assoc()) {
+					array_push($peliculasList, new Pelicula($row["ID"],$row["Titulo"],$row["Fecha"],$row["Descripcion"]));
+				}
+				$res->free();
+				return $peliculasList;
+			}
+        }catch(Exception $e){
 			return false;
-		}finally {
-			$conn->autocommit(true); // Restaurar el modo de autocommit
 		}
 	}
+
+	public function insertPeliculas() {
+		// Si no hacemos este array de episodios y solo ponemos Star Wars en el enlace solo devolverá el 4 episodio, no es eficiente porque hacemos 9 llamadas pero en la documentación de la api no aportan otra solución 
+		$episodios = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"];
+	
+		try {
+			// Conexion BBDD
+			$conn = DatabaseConn::getConn();
+			$conn->autocommit(false); // Deshabilitar el autocommit para manejar transacciones manualmente
+	
+			foreach ($episodios as $ep) {
+				// Conexion API
+				$api = "http://www.omdbapi.com/?apikey=731e41f&t=Star+Wars+Episode+" . $ep;
+				$json_data = file_get_contents($api);
+				$film = json_decode($json_data, true);
+	
+				// Verificar el contenido del campo para la insercion, y sustituir por vacíos si no existen
+				$id = $conn->real_escape_string(isset($film['imdbID']) ? $film['imdbID'] : '');
+				$titulo = $conn->real_escape_string(isset($film['Title']) ? $film['Title'] : '');
+				$fecha = $conn->real_escape_string(isset($film['Year']) ? $film['Year'] : '');
+				$descripcion = $conn->real_escape_string(isset($film['Plot']) ? $film['Plot'] : '');
+	
+				// Comprobar si la película ya existe en la base de datos
+				$query1 = "SELECT * FROM peliculas_star_wars WHERE ID = '$id'";
+				$result = $conn->query($query1);
+				if ($result && $result->num_rows > 0) {
+					// La película ya existe
+					continue;
+				}
+	
+				// Insertar en la base de datos
+				$query2 = "INSERT INTO peliculas_star_wars (ID, Titulo, Fecha, Descripcion) VALUES ('$id', '$titulo', '$fecha', '$descripcion')";
+				if (!$conn->query($query2)) {
+					throw new Exception("Error en la consulta: " . $conn->error);
+				}
+			}
+	
+			// Confirma la transacción si todas las inserciones son exitosas
+			$conn->commit();
+			return true;
+	
+		} catch (Exception $e) {
+			// Si hay una excepción se revierte la transacción
+			$conn->rollback();
+			return array('error' => $e->getMessage());
+	
+		} finally {
+			$conn->autocommit(true); // Restaurar el modo de autocommit
+			DatabaseConn::closeConn();
+		}
+	}
+	
+	
 }
 ?>

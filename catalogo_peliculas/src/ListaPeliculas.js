@@ -14,7 +14,7 @@ function ListaPeliculas() {
       try {
         setLoading(true);
         const response = await Axios.get(
-          `http://localhost/prueba-tesicnor/WebService.php`
+          `http://localhost/prueba-tesicnor/WebService.php?title=${busquedaTitle}&year=${busquedaYear}`
         );
         console.log(response.data);
         setPeliculas(response.data);
@@ -41,22 +41,29 @@ function ListaPeliculas() {
   return (
     <div className="container">
       <h1 className="title">Peliculas de Star Wars</h1>
-      <input
-        aria-label="Buscar por título"
-        type="text"
-        placeholder="Buscar por título"
-        value={busquedaTitle}
-        onChange={handleBuscar}
-        className="input"
-      />
-      <input
-        aria-label="Buscar por año"
-        type="text"
-        placeholder="Buscar por año"
-        value={busquedaYear}
-        onChange={handleBuscarYear}
-        className="input"
-      />
+      <div class="busqueda">
+        <label for="BuscarTitulo">Buscar por Titulo: </label>
+        <input
+          id="BuscarTitulo"
+          aria-label="Buscar por título"
+          type="text"
+          placeholder="Buscar por título"
+          value={busquedaTitle}
+          onChange={handleBuscar}
+          className="input"
+        />
+        <br />
+        <label for="BuscarYear">Buscar por Año: </label>
+        <input
+          id="BuscarYear"
+          aria-label="Buscar por año"
+          type="text"
+          placeholder="Buscar por año"
+          value={busquedaYear}
+          onChange={handleBuscarYear}
+          className="input"
+        />
+      </div>
       {loading ? (
         <p>Cargando...</p>
       ) : (

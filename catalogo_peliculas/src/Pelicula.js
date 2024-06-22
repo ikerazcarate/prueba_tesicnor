@@ -6,8 +6,12 @@ function Pelicula({ id, titulo, year, descripcion }) {
   return (
     <div className="tarjeta">
       <h2>{titulo}</h2>
-      <p>Año: {year}</p>
-      <p>Descripción: {descripcion}</p>
+      <p>
+        <span>Año:</span> {year}
+      </p>
+      <p>
+        <span>Descripción:</span> {descripcion}
+      </p>
     </div>
   );
 }

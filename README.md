@@ -5,13 +5,13 @@ Aplicación Web en React que muestra el listado completo de películas de star w
 Esta aplicación consigue los datos a través de una API de nuestro servidor PHP, el cuál recoge los datos con una consulta en https://www.omdbapi.com y los almacena en una base de datos local.
 
 ## INSTRUCCIONES PARA LA INSTALACIÓN
-El proyecto consta de 2 carpetas backend_php y catalogo_peliculas, al tratarse de una prueba he usado herramientas que permiten simular la web en un entorno local.
+El proyecto consta de 2 carpetas, backend_php y catalogo_peliculas, al tratarse de una prueba he usado herramientas que permiten simular la web en un entorno local.
 Pero se podría subir a un hoster cambiando las urls por el nuevo dominio en el código y creando el build de la app react (npm run build).
 A continuación voy a explicar los pasos que he seguido para probar el código de manera local:
 1. Para crear el servidor backend debemos de instalar XAMPP.
 2. Una vez instalado creamos la carpeta C:\xampp\htdocs\prueba-tesicnor\ y copiamos los documentos de backend_php dentro de ella.
-3. Iniciamos XAMPP y le damos Start a los modulos de Apache y MySQL
-4. Accedemos a la Administración de MySQL
+3. Iniciamos XAMPP y le damos Start a los modulos de Apache y MySQL.
+4. Accedemos a la Administración de MySQL.
 5. Creamos la base de datos peliculas con una unica tabla, se puede crear ejecutando el siguiente código SQL:
    CREATE DATABASE peliculas;
    CREATE TABLE `peliculas_star_wars` (
@@ -24,9 +24,9 @@ A continuación voy a explicar los pasos que he seguido para probar el código d
 6.  Después de crear la Base de Datos la poblamos con el siguiente servicio web php: localhost/prueba-tesicnor/CargarDatos.php
     Nota: También se podría crear un script que automatice esta carga.
 7. Una vez preparado el backend, solo nos falta ejecutar nuestra app en React, para ello instalamos npm.
-8. Una vez instalado solo debemos acceder a la carpeta catalogo_peliculas y ejecutar el comando npm start
+8. Una vez instalado solo debemos acceder a la carpeta catalogo_peliculas y ejecutar el comando: npm start
 
-Con eso ya deberíamos poder ver una web con el listado completo de peliculas de star wars
+Con eso ya deberíamos poder ver una web con el listado completo de peliculas de star wars.
 
 ## PLANIFICACIÓN
 1. Estudio de requisitos
@@ -41,12 +41,21 @@ Con eso ya deberíamos poder ver una web con el listado completo de peliculas de
 10. Estilado
 11. Documentación
 
+## HERRAMIENTAS (APLICACIONES, FRAMEWORKS, LIBRERÍAS...)
+- React
+- PHP
+- XAMP
+- PhpMyAdmin
+- Axios
+- Visual Studio Code
+- npm
+
 ## CUESTIONARIO
 1. Si te asignan una tarea y ves que la funcionalidad no está definida al 100%, ¿qué haces?
    
    Intento recopilar más información, ya que si no está totalmente definida puede que la aplicación no alcance los estandares deseados y supongo una mayor perdida de tiempo.
-   Por lo que intentaría concertar una reunión con mi superior, un compañero más experto o con el cliente para intentar tener toda la información que necesito.
+   Por lo que intentaría concertar una reunión con mi superior, un compañero más experimentado o con el cliente para intentar tener toda la información que necesito.
    
 3. ¿Has utilizado algún sistema de control de versiones? ¿Cómo lo usabas?
 
-   Sí, he usado git tanto en Gitlab como en Github. Normalmente lo usaba para tener un historial de mi proyecto y para colaborar con otros compañeros.
+   Sí, he usado git tanto en Gitlab como en Github. Normalmente lo usaba para tener un historial de las versiones del proyecto y para colaborar con otros compañeros.
